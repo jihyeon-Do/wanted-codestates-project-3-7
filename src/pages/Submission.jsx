@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from './Main';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,17 +22,27 @@ const Submission = () => {
   const filteredSurvey = forms.filter(obj => {
     return obj.formId === Number(id);
   });
-  const submitData = filteredSurvey[0].submitData;
+  let submitData = [];
+
+  if (filteredSurvey.length !== 0) {
+    submitData = filteredSurvey[0].submitData;
+  }
   // console.log(submitData);
+  const [target, setTarget] = useState(null);
+  const clickSurveyItem = Item => {
+    console.log(Item);
+    setTarget(Item);
+    dispatch(openModal());
+  };
 
   return (
     <Container>
       {submitData.map((obj, index) => (
-        <SurveyItem key={index} onClick={() => dispatch(openModal())}>
+        <SurveyItem key={index} onClick={() => clickSurveyItem(obj)}>
           {index + 1 + '. ' + '설문답변'}
         </SurveyItem>
       ))}
-      {modal ? <Modal /> : null}
+      {modal ? <Modal target={target} /> : null}
       <SummitButton
         onClick={() => {
           navigate('/forms');
@@ -54,6 +64,10 @@ const SurveyItem = styled.div`
   border-radius: 6px;
   margin-bottom: 20px;
   cursor: pointer;
+  :hover {
+    background-color: black;
+    color: white;
+  }
 `;
 
 const SummitButton = styled.div`
