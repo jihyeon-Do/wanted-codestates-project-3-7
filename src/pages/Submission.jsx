@@ -24,14 +24,13 @@ const Submission = () => {
     return obj.formId === Number(id);
   });
   const submitData = filteredSurvey[0].submitData;
-  // console.log(submitData);
 
   return (
     <Container>
       <Title>제출 목록</Title>
-      <SurveyCount>응답 n개</SurveyCount>
+      <SurveyCount>응답 {submitData.length}개</SurveyCount>
       {submitData.map((obj, index) => {
-        console.log(obj);
+        // console.log(obj);
         return (
           <div key={index}>
             <SurveyItem onClick={() => dispatch(openModal())}>
@@ -39,7 +38,7 @@ const Submission = () => {
             </SurveyItem>
             {modal ? (
               <Modal>
-                <ConfirmSurvey obj={obj}></ConfirmSurvey>
+                <ConfirmSurvey index={index} obj={obj} />
               </Modal>
             ) : null}
           </div>

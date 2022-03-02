@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ConfirmSurvey = obj => {
+  // console.log(index);
   console.log(obj);
   return (
     <ModalWrap>
@@ -9,11 +10,11 @@ const ConfirmSurvey = obj => {
       {/* ModalContent를 필드 1개로 보고 map으로 출력 */}
       <ModalContent>
         <FieldTitle>필드 제목</FieldTitle>
-        <FieldContent>내용</FieldContent>
+        <FieldContent>{obj.obj.name}</FieldContent>
       </ModalContent>
       <ModalContent>
         <FieldTitle>필드 제목</FieldTitle>
-        <FieldContent>내용</FieldContent>
+        <FieldContent>{obj.obj.address}</FieldContent>
       </ModalContent>
     </ModalWrap>
   );

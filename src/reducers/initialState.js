@@ -7,7 +7,7 @@ export const initialState = {
       submitData: [
         {
           id: 1,
-          name: '이름이름',
+          name: '1 이름',
           phone: '000-0000-0000',
           address: '주소주소 주소주소주소',
           input_0: 'S',
@@ -16,7 +16,7 @@ export const initialState = {
         },
         {
           id: 2,
-          name: '이름이름',
+          name: '2 이름',
           phone: '000-0000-0000',
           address: '주소주소 주소주소주소',
           input_0: 'S',
