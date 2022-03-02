@@ -80,7 +80,7 @@ const Wysiwyg = ({ index, fields, setFields, height = 100 }) => {
   };
 
   return (
-    <EditorContainer width={width} height={height}>
+    <EditorContainer height={height}>
       <Editor
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"

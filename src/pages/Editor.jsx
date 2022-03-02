@@ -63,7 +63,7 @@ const Editor = () => {
   const saveForm = () => {
     const formId = makeUniqueId();
     dispatch(createForm({ formId, title, fields }));
-    navigate('/forms');
+    navigate('/');
   };
 
   const openForm = () => {

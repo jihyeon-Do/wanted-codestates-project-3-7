@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from '../actions';
 import Modal from '../components/modal/Modal';
+import ConfirmSurvey from '../components/ConfirmSurvey';
 
 const Submission = () => {
   const navigate = useNavigate();
@@ -27,15 +28,21 @@ const Submission = () => {
 
   return (
     <Container>
+      <Title>제출 목록</Title>
+      <SurveyCount>응답 n개</SurveyCount>
       {submitData.map((obj, index) => (
         <SurveyItem key={index} onClick={() => dispatch(openModal())}>
           {index + 1 + '. ' + '설문답변'}
         </SurveyItem>
       ))}
-      {modal ? <Modal /> : null}
+      {modal ? (
+        <Modal>
+          <ConfirmSurvey></ConfirmSurvey>
+        </Modal>
+      ) : null}
       <SummitButton
         onClick={() => {
-          navigate('/forms');
+          navigate('/');
         }}
       >
         확인
@@ -43,6 +50,16 @@ const Submission = () => {
     </Container>
   );
 };
+
+const Title = styled.h1`
+  font-size: 24px;
+  margin-bottom: 40px;
+  text-align: center;
+`;
+
+const SurveyCount = styled.p`
+  margin-bottom: 20px;
+`;
 
 const SurveyItem = styled.div`
   height: 50px;
