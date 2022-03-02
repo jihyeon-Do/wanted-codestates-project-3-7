@@ -14,6 +14,8 @@ import { useInterval } from '../util';
 const Form = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const { id } = useParams();
+  // console.log(id);
 
   const { isModalShown } = useSelector(state => ({
     isModalShown: state.modal.isModalShown,

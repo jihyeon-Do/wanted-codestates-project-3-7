@@ -30,16 +30,21 @@ const Submission = () => {
     <Container>
       <Title>제출 목록</Title>
       <SurveyCount>응답 n개</SurveyCount>
-      {submitData.map((obj, index) => (
-        <SurveyItem key={index} onClick={() => dispatch(openModal())}>
-          {index + 1 + '. ' + '설문답변'}
-        </SurveyItem>
-      ))}
-      {modal ? (
-        <Modal>
-          <ConfirmSurvey></ConfirmSurvey>
-        </Modal>
-      ) : null}
+      {submitData.map((obj, index) => {
+        console.log(obj);
+        return (
+          <div key={index}>
+            <SurveyItem onClick={() => dispatch(openModal())}>
+              {index + 1 + '. ' + '설문 답변'}
+            </SurveyItem>
+            {modal ? (
+              <Modal>
+                <ConfirmSurvey obj={obj}></ConfirmSurvey>
+              </Modal>
+            ) : null}
+          </div>
+        );
+      })}
       <SummitButton
         onClick={() => {
           navigate('/');

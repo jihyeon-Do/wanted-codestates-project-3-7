@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ConfirmSurvey = () => {
+const ConfirmSurvey = obj => {
+  console.log(obj);
   return (
     <ModalWrap>
       <p>내용 확인</p>
