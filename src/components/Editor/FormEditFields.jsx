@@ -9,10 +9,10 @@ const FormEditFields = ({
   fields,
   setFields,
   field,
-  DragStart,
-  DragEnter,
-  DragOver,
-  DragEnd,
+  dragStart,
+  dragEnter,
+  dragOver,
+  dragEnd,
 }) => {
   const labelInput = useRef();
   const checkbox = useRef();
@@ -121,10 +121,10 @@ const FormEditFields = ({
         type="button"
         aria-label="드래그"
         className="drag-button"
-        onMouseDown={e => DragStart(e, index)}
-        onDragEnter={e => DragEnter(e, index)}
-        onDragOver={DragOver}
-        onDragLeave={e => DragEnd(e, index)}
+        onMouseDown={e => dragStart(e, index)}
+        onDragEnter={e => dragEnter(e, index)}
+        onDragOver={dragOver}
+        onDragLeave={e => dragEnd(e, index)}
       >
         <BsArrowDownUp className="drag-button" />
       </button>
@@ -191,10 +191,10 @@ FormEditFields.propTypes = {
   fields: PropTypes.array,
   setFields: PropTypes.func,
   field: PropTypes.object,
-  DragStart: PropTypes.func,
-  DragEnter: PropTypes.func,
-  DragOver: PropTypes.func,
-  DragEnd: PropTypes.func,
+  dragStart: PropTypes.func,
+  dragEnter: PropTypes.func,
+  dragOver: PropTypes.func,
+  dragEnd: PropTypes.func,
 };
 
 export default FormEditFields;

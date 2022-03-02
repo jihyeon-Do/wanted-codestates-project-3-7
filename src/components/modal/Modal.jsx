@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { closeModal } from '../../actions/index';
 import { AiOutlineClose } from 'react-icons/ai';
+import PropTypes from 'prop-types';
 
-const Modal = children => {
+const Modal = (props) => {
   const PreventModalOff = e => {
     e.stopPropagation();
   };
@@ -13,7 +14,7 @@ const Modal = children => {
   return (
     <>
       <Background onClick={() => dispatch(closeModal())}>
-        <ContentsWrap onClick={PreventModalOff}>{children}</ContentsWrap>
+        <ContentsWrap onClick={PreventModalOff}>{props.children}</ContentsWrap>
       </Background>
       <CloseBtnWrap>
         <AiOutlineClose onClick={() => dispatch(closeModal())} />
@@ -65,5 +66,9 @@ const CloseBtnWrap = styled.div`
   }
   z-index: 1000;
 `;
+
+Modal.propTypes = {
+  children: PropTypes.node,
+};
 
 export default Modal;

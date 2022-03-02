@@ -18,7 +18,7 @@ export const createForm = ({ formId, title, fields }) => {
   };
 };
 
-export const deleteForm = (formId) => {
+export const deleteForm = formId => {
   return {
     type: DELETE_FORM,
     payload: {

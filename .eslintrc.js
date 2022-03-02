@@ -12,5 +12,7 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   plugins: ['react', 'prettier'],
-  rules: {},
-}
+  rules: {
+    'no-unused-vars': 'warn',
+  },
+};

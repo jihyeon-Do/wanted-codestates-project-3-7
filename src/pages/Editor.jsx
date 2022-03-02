@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { createForm } from '../actions';
+import { makeUniqueId } from '../utils/newId';
 import styled from 'styled-components';
 import Fields from '../components/Editor/Fields';
 
@@ -13,11 +16,13 @@ const basic = {
 };
 
 const Editor = () => {
+  const [title, setTitle] = useState('');
   const [fields, setFields] = useState([basic]);
   const [isDrag, setIsDrag] = useState(false);
   const dragItemIndex = useRef(null);
   const dragOverItemIndex = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // field 추가
   const addField = () => {
@@ -51,12 +56,28 @@ const Editor = () => {
     setIsDrag(false);
   };
 
+  const changeTitle = e => {
+    setTitle(e.target.value);
+  };
+
+  const saveForm = () => {
+    const formId = makeUniqueId();
+    dispatch(createForm({ formId, title, fields }));
+    navigate('/forms');
+  };
+
+  const openForm = () => {
+    const formId = makeUniqueId();
+    dispatch(createForm({ formId, title, fields }));
+    navigate(`/forms/${formId}`);
+  };
+
   return (
     <Form>
       {/* 제목 */}
       <InputTitle>
         <label htmlFor="title">제목</label>
-        <input type="text" />
+        <input type="text" onChange={changeTitle} value={title} />
       </InputTitle>
 
       {/* 필드 목록 */}
@@ -85,20 +106,8 @@ const Editor = () => {
 
       {/* save,open btn */}
       <Btn>
-        <button
-          onClick={() => {
-            navigate('/forms/:id');
-          }}
-        >
-          폼 열기
-        </button>
-        <button
-          onClick={() => {
-            navigate('/forms');
-          }}
-        >
-          저장하기
-        </button>
+        <button onClick={openForm}>폼 열기</button>
+        <button onClick={saveForm}>저장하기</button>
       </Btn>
     </Form>
   );

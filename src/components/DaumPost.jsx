@@ -1,7 +1,8 @@
 import React from 'react';
-import DaumPostCode from 'react-daum-postcode';
+import DaumPostCode from 'react-daum-postcode'
+import PropTypes from 'prop-types';
 
-const DaumPost = setAddressKakakoApi => {
+const DaumPost = ({setAddressKakakoApi}) => {
   const postCodeStyle = {
     display: 'block',
     position: 'relative',
@@ -27,6 +28,10 @@ const DaumPost = setAddressKakakoApi => {
     await setAddressKakakoApi(fullAddress);
   };
   return <DaumPostCode onComplete={handleComplete} style={postCodeStyle} />;
+};
+
+DaumPost.propTypes = {
+  setAddressKakakoApi: PropTypes.func,
 };
 
 export default DaumPost;
