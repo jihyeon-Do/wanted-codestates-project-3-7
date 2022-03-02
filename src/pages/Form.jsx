@@ -75,7 +75,6 @@ const Form = () => {
 
   const onChangeInputValues = e => {
     const { value, name } = e.target;
-    console.log(e.target);
     if (name === 'name') {
       setInputValues({
         ...inputValues,
@@ -140,7 +139,6 @@ const Form = () => {
 
   useInterval(
     () => {
-      console.log(progress);
       if (progress < 100) {
         setProgress(progress + 1);
       }
@@ -274,7 +272,7 @@ const Form = () => {
         <SummitButtonWrapper>
           <SummitButton
             onClick={() => {
-              navigate('/forms');
+              navigate('/');
             }}
           >
             제출하기
@@ -343,7 +341,7 @@ const InnerSection = styled.div`
 
 const ImageWrapper = styled.div`
   display: flex;
-  jusify-content: center;
+  justify-content: center;
   align-items: center;
   position: relative;
   width: 100%;

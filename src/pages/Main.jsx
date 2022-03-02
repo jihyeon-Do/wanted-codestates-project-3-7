@@ -11,7 +11,6 @@ const Main = () => {
   const { forms } = useSelector(state => ({
     forms: state.form.forms,
   }));
-  console.log(forms);
 
   return (
     <Container>

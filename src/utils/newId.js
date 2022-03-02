@@ -9,7 +9,6 @@ const newId = () => {
     }
 
     board[id] = true;
-    console.log(board);
     return id;
   };
 };
