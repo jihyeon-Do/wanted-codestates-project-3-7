@@ -62,10 +62,11 @@ const AccordingToType = ({ index, fields, setFields, field }) => {
   return (
     <>
       {field.type == 'text' || field.type == 'phone' ? (
-        <input
+        <TextInput
           type="text"
           onChange={handleChangeText}
           value={field.placeholder}
+          placeholder="플레이스홀더 예) 11/10(토) 15:00"
         />
       ) : field.type === 'select' ? (
         <TagBox>
@@ -91,15 +92,30 @@ const AccordingToType = ({ index, fields, setFields, field }) => {
     </>
   );
 };
+const TextInput = styled.input`
+  height: 27px;
+  width: 100%;
+  border: none;
+  padding: 10px;
+  margin: none;
+  border-top: 1px solid #f1f1f1;
+  box-sizing: border-box;
+  :focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #ccc;
+  }
+`;
 
 // TagBox위치
 const TagBox = styled.div`
   display: flex;
   height: 27px;
   padding: 4px;
-  border: 1px solid #bbb;
+  border-top: 1px solid #f1f1f1;
   :focus-within {
-    border: 1px solid black;
+    outline: none;
   }
 `;
 
@@ -151,6 +167,9 @@ const Input = styled.input`
   box-sizing: border-box;
   :focus {
     outline: none;
+  }
+  &::placeholder {
+    color: #ccc;
   }
 `;
 

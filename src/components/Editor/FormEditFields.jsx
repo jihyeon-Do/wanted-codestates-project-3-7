@@ -9,10 +9,10 @@ const FormEditFields = ({
   fields,
   setFields,
   field,
-  dragStart,
-  dragEnter,
-  dragOver,
-  dragEnd,
+  DragStart,
+  DragEnter,
+  DragOver,
+  DragEnd,
 }) => {
   const labelInput = useRef();
   const checkbox = useRef();
@@ -121,10 +121,10 @@ const FormEditFields = ({
         type="button"
         aria-label="드래그"
         className="drag-button"
-        onMouseDown={e => dragStart(e, index)}
-        onDragEnter={e => dragEnter(e, index)}
-        onDragOver={dragOver}
-        onDragLeave={e => dragEnd(e, index)}
+        onMouseDown={e => DragStart(e, index)}
+        onDragEnter={e => DragEnter(e, index)}
+        onDragOver={DragOver}
+        onDragLeave={e => DragEnd(e, index)}
       >
         <BsArrowDownUp className="drag-button" />
       </button>
@@ -159,15 +159,31 @@ const FormEditFieldsWrapper = styled.div`
 const Select = styled.select`
   font-size: 1rem;
   font-weight: 800;
+  border: none;
+  padding-left: 10px;
+  border-top-left-radius: 10px;
+  :focus {
+    outline: none;
+  }
 `;
 const LabelInput = styled.input`
   font-weight: 800;
+  border: none;
+  width: 100%;
+  border-left: 1px solid #f1f1f1;
+  padding: 0 10px;
+  :focus {
+    outline: none;
+  }
 `;
 
 const Fieldset = styled.fieldset`
   display: flex;
   align-items: center;
   background-color: #eee;
+  width: 110px;
+  font-size: 14px;
+  font-weight: bold;
 `;
 
 FormEditFields.propTypes = {
@@ -175,10 +191,10 @@ FormEditFields.propTypes = {
   fields: PropTypes.array,
   setFields: PropTypes.func,
   field: PropTypes.object,
-  dragStart: PropTypes.func,
-  dragEnter: PropTypes.func,
-  dragOver: PropTypes.func,
-  dragEnd: PropTypes.func,
+  DragStart: PropTypes.func,
+  DragEnter: PropTypes.func,
+  DragOver: PropTypes.func,
+  DragEnd: PropTypes.func,
 };
 
 export default FormEditFields;

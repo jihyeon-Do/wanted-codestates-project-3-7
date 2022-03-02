@@ -3,6 +3,7 @@ import AccordingToType from './AccordingToType';
 import FormEditFields from './FormEditFields';
 import PropTypes from 'prop-types';
 import Wysiwyg from './Wysiwyg';
+import styled from 'styled-components';
 
 const Fields = ({
   field,
@@ -15,7 +16,7 @@ const Fields = ({
   dragEnd,
 }) => {
   return (
-    <>
+    <Wrap>
       <FormEditFields
         index={index}
         fields={fields}
@@ -40,9 +41,16 @@ const Fields = ({
         setFields={setFields}
         field={field}
       />
-    </>
+    </Wrap>
   );
 };
+
+const Wrap = styled.div`
+  border: 1px solid #f1f1f1;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+`;
 
 Fields.propTypes = {
   field: PropTypes.object,

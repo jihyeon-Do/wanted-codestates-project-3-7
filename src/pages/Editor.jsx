@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Fields from '../components/Editor/Fields';
 
@@ -16,6 +17,7 @@ const Editor = () => {
   const [isDrag, setIsDrag] = useState(false);
   const dragItemIndex = useRef(null);
   const dragOverItemIndex = useRef(null);
+  const navigate = useNavigate();
 
   // field 추가
   const addField = () => {
@@ -51,6 +53,14 @@ const Editor = () => {
 
   return (
     <Form>
+      {/* 제목 */}
+      <InputTitle>
+        <label htmlFor="title">제목</label>
+        <input type="text" />
+      </InputTitle>
+
+      {/* 필드 목록 */}
+      <p>필드 목록</p>
       <ul>
         {fields.map((field, index) => {
           return (
@@ -69,19 +79,92 @@ const Editor = () => {
           );
         })}
       </ul>
-      <button onClick={addField} type="button">
-        추가
-      </button>
-      <div>{JSON.stringify(fields)}</div>
+      <AddField onClick={addField} type="button">
+        필드 추가하기
+      </AddField>
+
+      {/* save,open btn */}
+      <Btn>
+        <button
+          onClick={() => {
+            navigate('/forms/:id');
+          }}
+        >
+          폼 열기
+        </button>
+        <button
+          onClick={() => {
+            navigate('/forms');
+          }}
+        >
+          저장하기
+        </button>
+      </Btn>
     </Form>
   );
 };
 
 const Form = styled.form`
+  max-width: 428px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  margin: 50px auto;
   box-sizing: border-box;
-  border-bottom: 1px solid black;
+  p {
+    color: gray;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+`;
+
+const InputTitle = styled.div`
+  margin-bottom: 20px;
+  label {
+    display: block;
+    color: gray;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
+  input {
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px;
+  }
+`;
+
+const AddField = styled.button`
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #304ffd;
+  background-color: #304ffd;
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.2s;
+  cursor: pointer;
+  :hover {
+    border: 1px solid #304ffd;
+    background-color: #fff;
+    color: #304ffd;
+  }
+`;
+
+const Btn = styled.div`
+  display: flex;
+  margin-top: 10px;
+  justify-content: end;
+  button {
+    padding: 8px;
+    margin-left: 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:last-child {
+    color: #fff;
+    background-color: #304ffd;
+  }
 `;
 
 Editor.propTypes = {};
