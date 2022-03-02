@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from '../actions';
 import Modal from '../components/modal/Modal';
+import ConfirmSurvey from '../components/ConfirmSurvey';
 
 const Submission = () => {
   const navigate = useNavigate();
@@ -23,16 +24,26 @@ const Submission = () => {
     return obj.formId === Number(id);
   });
   const submitData = filteredSurvey[0].submitData;
-  // console.log(submitData);
 
   return (
     <Container>
-      {submitData.map((obj, index) => (
-        <SurveyItem key={index} onClick={() => dispatch(openModal())}>
-          {index + 1 + '. ' + '설문답변'}
-        </SurveyItem>
-      ))}
-      {modal ? <Modal /> : null}
+      <Title>제출 목록</Title>
+      <SurveyCount>응답 {submitData.length}개</SurveyCount>
+      {submitData.map((obj, index) => {
+        // console.log(obj);
+        return (
+          <div key={index}>
+            <SurveyItem onClick={() => dispatch(openModal())}>
+              {index + 1 + '. ' + '설문 답변'}
+            </SurveyItem>
+            {modal ? (
+              <Modal>
+                <ConfirmSurvey index={index} obj={obj} />
+              </Modal>
+            ) : null}
+          </div>
+        );
+      })}
       <SummitButton
         onClick={() => {
           navigate('/');
@@ -43,6 +54,16 @@ const Submission = () => {
     </Container>
   );
 };
+
+const Title = styled.h1`
+  font-size: 24px;
+  margin-bottom: 40px;
+  text-align: center;
+`;
+
+const SurveyCount = styled.p`
+  margin-bottom: 20px;
+`;
 
 const SurveyItem = styled.div`
   height: 50px;

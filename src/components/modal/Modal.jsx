@@ -62,6 +62,8 @@ const CloseBtnWrap = styled.div`
   background-color: #dcdcdc;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
+
   &:hover {
     background-color: #d3959b;
   }
