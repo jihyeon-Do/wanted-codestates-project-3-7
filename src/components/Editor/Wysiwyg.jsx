@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -13,7 +13,6 @@ const Wysiwyg = ({ index, fields, setFields, height = 100 }) => {
   const [editorToHtml, setEditorToHTML] = useState(
     draftToHtml(convertToRaw(editorState.getCurrentContent())),
   );
-  const editor = useRef(null);
   const htmlToEditor = `초기 값`;
   useEffect(() => {
     const blocksFromHtml = htmlToDraft(htmlToEditor);
@@ -76,7 +75,6 @@ const Wysiwyg = ({ index, fields, setFields, height = 100 }) => {
 
   const onEditorStateChange = editorState => {
     setEditorState(editorState);
-    editor.current.focus();
   };
 
   return (
@@ -88,7 +86,6 @@ const Wysiwyg = ({ index, fields, setFields, height = 100 }) => {
           inline: { inDropdown: false },
         }}
         editorState={editorState}
-        ref={editor}
         // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
         onEditorStateChange={onEditorStateChange}
       />
