@@ -1,0 +1,43 @@
+import React from 'react';
+import styled from 'styled-components';
+import {
+  Wrapper,
+  InputField,
+  FONT_COLOR_TOMATO,
+  FONT_COLOR_BLACK,
+  InputSummitingLabel,
+} from './Shared';
+import PropTypes from 'prop-types';
+
+export const NameField = ({
+  name,
+  onChangeInputValues,
+  isSubmitting,
+  nameMessage,
+}) => {
+  return (
+    <Wrapper>
+      <h2>이름</h2>
+      <br />
+      <InputField
+        type="text"
+        name="name"
+        placeholder="주민등록상이름"
+        value={name}
+        onChange={onChangeInputValues}
+      />
+      {name.length > 0 && (
+        <InputSummitingLabel isSubmitting={isSubmitting}>
+          {nameMessage}
+        </InputSummitingLabel>
+      )}
+    </Wrapper>
+  );
+};
+
+NameField.propTypes = {
+  name: PropTypes.string,
+  onChangeInputValues: PropTypes.func,
+  isSubmitting: PropTypes.bool,
+  nameMessage: PropTypes.string,
+};
