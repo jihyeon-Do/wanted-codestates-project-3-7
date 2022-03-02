@@ -6,7 +6,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 
 const Modal = props => {
-  // console.log(children);
   const PreventModalOff = e => {
     e.stopPropagation();
   };

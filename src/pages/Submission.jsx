@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from './Main';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,8 +23,20 @@ const Submission = () => {
   const filteredSurvey = forms.filter(obj => {
     return obj.formId === Number(id);
   });
-  const submitData = filteredSurvey[0].submitData;
+  // console.log(filteredSurvey);
+  // const label = filteredSurvey[0].fields;
+  // console.log(label);
 
+  let submitData = [];
+  if (filteredSurvey.length !== 0) {
+    submitData = filteredSurvey[0].submitData;
+  }
+  const [target, setTarget] = useState(null);
+  const clickSurveyItem = Item => {
+    console.log(Item);
+    setTarget(Item);
+    dispatch(openModal());
+  };
   return (
     <Container>
       <Title>제출 목록</Title>
@@ -32,18 +44,16 @@ const Submission = () => {
       {submitData.map((obj, index) => {
         // console.log(obj);
         return (
-          <div key={index}>
-            <SurveyItem onClick={() => dispatch(openModal())}>
-              {index + 1 + '. ' + '설문 답변'}
-            </SurveyItem>
-            {modal ? (
-              <Modal>
-                <ConfirmSurvey index={index} obj={obj} />
-              </Modal>
-            ) : null}
-          </div>
+          <SurveyItem key={index} onClick={() => clickSurveyItem(obj)}>
+            {index + 1 + '. ' + '설문 답변'}
+          </SurveyItem>
         );
       })}
+      {modal ? (
+        <Modal>
+          <ConfirmSurvey filteredSurvey={filteredSurvey} />
+        </Modal>
+      ) : null}
       <SummitButton
         onClick={() => {
           navigate('/');
@@ -75,6 +85,10 @@ const SurveyItem = styled.div`
   border-radius: 6px;
   margin-bottom: 20px;
   cursor: pointer;
+  :hover {
+    background-color: black;
+    color: white;
+  }
 `;
 
 const SummitButton = styled.div`

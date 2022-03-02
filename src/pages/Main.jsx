@@ -11,6 +11,10 @@ const Main = () => {
   const { forms } = useSelector(state => ({
     forms: state.form.forms,
   }));
+  // localStorage.setItem('reduxStore', JSON.stringify(forms));
+  // const getforms = JSON.parse((localStorage.getItem('reduxStore'))
+  // console.log(getforms);
+  // console.log(forms);
 
   return (
     <Container>

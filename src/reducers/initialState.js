@@ -3,7 +3,24 @@ export const initialState = {
     {
       formId: 1,
       title: '기본 설문지',
-      fields: [],
+      fields: [
+        {
+          id: 'name',
+          type: 'text',
+          required: true,
+          label: '이름',
+          placeholder: '주민등록상 이름 입력',
+          description: '설명영역',
+        },
+        {
+          id: 'phone',
+          type: 'phone',
+          required: true,
+          label: '휴대폰 번호',
+          placeholder: '',
+          description: '',
+        },
+      ],
       submitData: [
         {
           id: 1,
