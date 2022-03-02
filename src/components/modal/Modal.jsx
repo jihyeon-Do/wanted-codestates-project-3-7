@@ -6,7 +6,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 
 const Modal = props => {
-  console.log(props.target);
   const PreventModalOff = e => {
     e.stopPropagation();
   };
@@ -15,7 +14,6 @@ const Modal = props => {
   return (
     <>
       <Background onClick={() => dispatch(closeModal())}>
-        <div>{props.target.title}</div>
         <ContentsWrap onClick={PreventModalOff}>{props.children}</ContentsWrap>
       </Background>
       <CloseBtnWrap>
@@ -63,6 +61,8 @@ const CloseBtnWrap = styled.div`
   background-color: #dcdcdc;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
+
   &:hover {
     background-color: #d3959b;
   }
@@ -71,7 +71,6 @@ const CloseBtnWrap = styled.div`
 
 Modal.propTypes = {
   children: PropTypes.node,
-  target: PropTypes.object,
 };
 
 export default Modal;
