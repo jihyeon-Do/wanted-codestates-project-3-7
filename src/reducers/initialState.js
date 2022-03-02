@@ -1,7 +1,7 @@
 export const initialState = {
   forms: [
     {
-      formId: 1,
+      formId: 'formId1',
       title: '기본 설문지',
       fields: [
         {
@@ -24,7 +24,7 @@ export const initialState = {
       submitData: [
         {
           id: 1,
-          name: '1 이름',
+          name: '홍길동',
           phone: '000-0000-0000',
           address: '주소주소 주소주소주소',
           input_0: 'S',

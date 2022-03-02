@@ -21,7 +21,7 @@ const Submission = () => {
   }));
   console.log(modal);
   const filteredSurvey = forms.filter(obj => {
-    return obj.formId === Number(id);
+    return obj.formId === id;
   });
   // console.log(filteredSurvey);
   // const label = filteredSurvey[0].fields;
@@ -33,7 +33,6 @@ const Submission = () => {
   }
   const [target, setTarget] = useState(null);
   const clickSurveyItem = Item => {
-    console.log(Item);
     setTarget(Item);
     dispatch(openModal());
   };
@@ -51,7 +50,7 @@ const Submission = () => {
       })}
       {modal ? (
         <Modal>
-          <ConfirmSurvey filteredSurvey={filteredSurvey} />
+          <ConfirmSurvey target={target} filteredSurvey={filteredSurvey} />
         </Modal>
       ) : null}
       <SummitButton

@@ -2,33 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const ConfirmSurvey = ({ filteredSurvey }) => {
-  // console.log(index);
-  console.log(filteredSurvey);
-  // const getField = () => {
-  //   for (let el in target.target) {
-  //     console.log(target.target[el]);
-  //   }
-  // };
+const ConfirmSurvey = ({ filteredSurvey, target }) => {
   return (
     <ModalWrap>
       <p>내용 확인</p>
-      {/* ModalContent를 필드 1개로 보고 map으로 출력 */}
-      {/* <ModalContent>
-        <FieldTitle>필드 제목</FieldTitle>
-        <FieldContent>{target.target.name}</FieldContent>
-      </ModalContent>
-      <ModalContent>
-        <FieldTitle>필드 제목</FieldTitle>
-        <FieldContent>{target.address}</FieldContent>
-      </ModalContent> */}
+
       {filteredSurvey[0].fields.map((obj, index) => {
         return (
           <ModalContent key={index}>
             <FieldTitle>{obj.label}</FieldTitle>
-            <FieldContent>
-              {`${filteredSurvey[0].submitData[index]} + ${obj.id} `}
-            </FieldContent>
+            <FieldContent>{target[obj.id]}</FieldContent>
           </ModalContent>
         );
       })}
@@ -65,5 +48,6 @@ const FieldContent = styled.p`
 `;
 ConfirmSurvey.propTypes = {
   filteredSurvey: PropTypes.array,
+  target: PropTypes.object,
 };
 export default ConfirmSurvey;
