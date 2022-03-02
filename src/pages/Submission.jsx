@@ -10,8 +10,6 @@ import ConfirmSurvey from '../components/ConfirmSurvey';
 const Submission = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const params = useParams();
-  // const id = params.id;
   const { id } = useParams();
   const { forms } = useSelector(state => ({
     forms: state.form.forms,
@@ -19,13 +17,9 @@ const Submission = () => {
   const { modal } = useSelector(state => ({
     modal: state.modal.isModalShown,
   }));
-  console.log(modal);
   const filteredSurvey = forms.filter(obj => {
     return obj.formId === id;
   });
-  // console.log(filteredSurvey);
-  // const label = filteredSurvey[0].fields;
-  // console.log(label);
 
   let submitData = [];
   if (filteredSurvey.length !== 0) {
@@ -41,7 +35,6 @@ const Submission = () => {
       <Title>제출 목록</Title>
       <SurveyCount>응답 {submitData.length}개</SurveyCount>
       {submitData.map((obj, index) => {
-        // console.log(obj);
         return (
           <SurveyItem key={index} onClick={() => clickSurveyItem(obj)}>
             {index + 1 + '. ' + '설문 답변'}
@@ -85,8 +78,8 @@ const SurveyItem = styled.div`
   margin-bottom: 20px;
   cursor: pointer;
   :hover {
-    background-color: black;
-    color: white;
+    background-color: #ccc;
+    color: #111;
   }
 `;
 

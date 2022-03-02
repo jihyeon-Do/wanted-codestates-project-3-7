@@ -127,7 +127,9 @@ const Form = styled.form`
 `;
 
 const InputTitle = styled.div`
+  width: 428px;
   margin-bottom: 20px;
+
   label {
     display: block;
     color: gray;
@@ -135,9 +137,9 @@ const InputTitle = styled.div`
     font-weight: bold;
   }
   input {
+    width: 406px;
     border: 1px solid #f1f1f1;
     border-radius: 10px;
-    width: 100%;
     padding: 10px;
   }
 `;
