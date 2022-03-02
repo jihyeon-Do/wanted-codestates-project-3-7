@@ -21,7 +21,7 @@ const Submission = () => {
   }));
   console.log(modal);
   const filteredSurvey = forms.filter(obj => {
-    return obj.formId === Number(id);
+    return obj.formId === id;
   });
   // console.log(filteredSurvey);
   // const label = filteredSurvey[0].fields;
