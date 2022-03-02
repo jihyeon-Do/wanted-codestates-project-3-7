@@ -33,7 +33,6 @@ const Submission = () => {
   }
   const [target, setTarget] = useState(null);
   const clickSurveyItem = Item => {
-    console.log(Item);
     setTarget(Item);
     dispatch(openModal());
   };
@@ -51,7 +50,7 @@ const Submission = () => {
       })}
       {modal ? (
         <Modal>
-          <ConfirmSurvey filteredSurvey={filteredSurvey} />
+          <ConfirmSurvey target={target} filteredSurvey={filteredSurvey} />
         </Modal>
       ) : null}
       <SummitButton
