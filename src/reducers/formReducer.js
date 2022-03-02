@@ -14,7 +14,7 @@ export const formReducer = (state = initialState, action) => {
         if (item.formId === action.payload.formId) {
           return {
             ...item,
-            submitData: [...item.submitData, action.payload.response],
+            submitData: [...item.submitData, action.payload.data],
           };
         }
         return item;
