@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiChevronDown, BiCheck } from 'react-icons/bi';
-import { BsFillFileArrowDownFill } from 'react-icons/bs';
+// import { BsFillFileArrowDownFill } from 'react-icons/bs';
 import { AiTwotoneCamera } from 'react-icons/ai';
 import Modal from '../components/modal/Modal';
 import DaumPost from '../components/DaumPost';
@@ -28,8 +28,7 @@ const Form = () => {
   });
   // const [isAllItemFilled, setIsAllItemFilled] = useState(false);
   const [isOptionHasList, setIsOptionHasList] = useState(false);
-  const { name, phoneNumber, fullAddress, input1, input2, agreement } =
-    inputValues;
+  const { name, phoneNumber, fullAddress, input1, agreement } = inputValues;
 
   const [selected, setSelected] = useState(null);
   const [image, setImage] = useState({
@@ -42,7 +41,7 @@ const Form = () => {
 
   const hiddenFileInput = useRef(null);
 
-  const handleClick = e => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
@@ -57,7 +56,6 @@ const Form = () => {
       setIsPreviewSeeing(!isPreviewSeeing);
     }
   };
-
 
   console.log(image.preview);
   // 서버를 활용할건지에 대한  논의가 필요
@@ -216,23 +214,27 @@ const Form = () => {
                 ) : (
                   <ProgressBar progress={progress} />
                 )}
-                <Translucent isPreviewSeeing={isPreviewSeeing} isProgress={isProgress}>
+                <Translucent
+                  isPreviewSeeing={isPreviewSeeing}
+                  isProgress={isProgress}
+                >
                   <AttachButton>
                     <ButtonContentesWrapper>
-                      {isPreviewSeeing === false ? (
-                        <>
-                          <AiTwotoneCamera onClick={handleClick} />
-                          <br />
-                          <p>눌러서 파일 등록 </p>
-                        </>
-                      ): null
-                      //   (
-                      //   <>
-                      //     <BsFillFileArrowDownFill onClick={handleClick} />
-                      //     <br />
-                      //     <p>눌러서 파일 변경</p>
-                      //   </>
-                      // )
+                      {
+                        isPreviewSeeing === false ? (
+                          <>
+                            <AiTwotoneCamera onClick={handleClick} />
+                            <br />
+                            <p>눌러서 파일 등록 </p>
+                          </>
+                        ) : null
+                        //   (
+                        //   <>
+                        //     <BsFillFileArrowDownFill onClick={handleClick} />
+                        //     <br />
+                        //     <p>눌러서 파일 변경</p>
+                        //   </>
+                        // )
                       }
                       <input
                         type="file"

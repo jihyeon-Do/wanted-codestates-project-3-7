@@ -4,7 +4,7 @@ export const initialState = {
       formId: 1,
       title: '기본 설문지',
       fields: [],
-      submitData: [],
+      submitData: [{ title: '예시1' }, { title: '예시2' }],
     },
   ],
   isModalShown: false,

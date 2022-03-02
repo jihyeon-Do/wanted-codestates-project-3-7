@@ -2,24 +2,37 @@ import React from 'react';
 import { Container } from './Main';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal } from '../actions';
+import Modal from '../components/modal/Modal';
 
 const Submission = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  const id = params.id;
-  console.log(id);
+  const dispatch = useDispatch();
+  // const params = useParams();
+  // const id = params.id;
+  const { id } = useParams();
+  const { forms } = useSelector(state => ({
+    forms: state.form.forms,
+  }));
+  const { modal } = useSelector(state => ({
+    modal: state.modal.isModalShown,
+  }));
+  console.log(modal);
+  const filteredSurvey = forms.filter(obj => {
+    return obj.formId === Number(id);
+  });
+  const submitData = filteredSurvey[0].submitData;
+  // console.log(submitData);
 
   return (
     <Container>
-      {/* map으로 폼 데이터 출력 */}
-      {/* {sumbitData.map((obj, index) => {
-        return (
-          <SurveyItem obj={obj} key={index}>
-            {obj.formId} 설문 답변
-          </SurveyItem>
-        );
-      })} */}
-      <SurveyItem>1. 설문 답변</SurveyItem>
+      {submitData.map((obj, index) => (
+        <SurveyItem key={index} onClick={() => dispatch(openModal())}>
+          {index + 1 + '. ' + '설문답변'}
+        </SurveyItem>
+      ))}
+      {modal ? <Modal /> : null}
       <SummitButton
         onClick={() => {
           navigate('/forms');
@@ -39,6 +52,8 @@ const SurveyItem = styled.div`
   align-items: center;
   padding: 10px 24px;
   border-radius: 6px;
+  margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 const SummitButton = styled.div`
