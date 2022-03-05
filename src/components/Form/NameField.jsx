@@ -15,17 +15,17 @@ export const NameField = ({
   return (
     <Wrapper>
       <h2>{label}</h2>
-      <br />
+      {description && <p>{description}</p>}
       <InputField
         type="text"
         name="name"
-        placeholder={placeholder}
         value={name}
-        onChange={(e) => onChangeInputValues(e, required)}
+        placeholder={placeholder}
+        onChange={e => onChangeInputValues(e, required)}
       />
-      {name.length > 0 && (
+      {nameMessage.length > 0 && (
         <InputSummitingLabel isSubmitting={isSubmitting}>
-          {description.replace("\"", "")}
+          {nameMessage}
         </InputSummitingLabel>
       )}
     </Wrapper>
@@ -33,13 +33,12 @@ export const NameField = ({
 };
 
 NameField.propTypes = {
-  id: PropTypes.string,
   label: PropTypes.string,
-  placeholder:PropTypes.string,
-  required:PropTypes.bool,
-  description:PropTypes.string,
   name: PropTypes.string,
+  nameMessage: PropTypes.string,
+  placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  description: PropTypes.string,
   onChangeInputValues: PropTypes.func,
   isSubmitting: PropTypes.bool,
-  nameMessage: PropTypes.string,
 };

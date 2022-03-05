@@ -6,10 +6,15 @@ import PropTypes from 'prop-types';
 import { useInterval } from '../../utils/util';
 import { AiTwotoneCamera } from 'react-icons/ai';
 
-export const AttachedField = setIsSubmitting => {
+export const AttachedField = ({
+  label,
+  description,
+  attachHandler,
+  setIsSubmitting,
+}) => {
   const hiddenFileInput = useRef(null);
 
-  const handleClick = e => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
@@ -43,13 +48,14 @@ export const AttachedField = setIsSubmitting => {
         raw: e.target.files[0],
       });
       setIsPreviewSeeing(!isPreviewSeeing);
+      attachHandler(URL.createObjectURL(e.target.files[0]));
     }
   };
 
   return (
     <Wrapper>
-      <h2>첨부파일(선택)</h2>
-      <br />
+      <h2>{label}</h2>
+      {description && <p>{description}</p>}
       <SectionWrapper>
         <AttachSection>
           <InnerSection>
@@ -110,7 +116,7 @@ const InnerSection = styled.div`
 
 const ImageWrapper = styled.div`
   display: flex;
-  jusify-content: center;
+  justify-content: center;
   align-items: center;
   position: relative;
   width: 100%;
@@ -179,9 +185,8 @@ const ButtonContentesWrapper = styled.div`
 `;
 
 AttachedField.propTypes = {
-  isProgress: PropTypes.bool,
-  progress: PropTypes.number,
-  isPreviewSeeing: PropTypes.bool,
-  handleClick: PropTypes.func,
-  handleImageAddress: PropTypes.func,
+  label: PropTypes.string,
+  description: PropTypes.string,
+  attachHandler: PropTypes.func,
+  setIsSubmitting: PropTypes.func,
 };
