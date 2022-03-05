@@ -1,7 +1,7 @@
 export const initialState = {
   forms: [
     {
-      formId: 'formId1',
+      formId: '1',
       title: '기본 설문지',
       fields: [
         {
