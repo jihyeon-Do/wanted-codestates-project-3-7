@@ -17,19 +17,19 @@ const Submission = () => {
   const { modal } = useSelector(state => ({
     modal: state.modal.isModalShown,
   }));
-  const filteredSurvey = forms.filter(obj => {
-    return obj.formId === id;
-  });
+  const filteredSurvey = forms.filter(obj => obj.formId === id);
 
   let submitData = [];
   if (filteredSurvey.length !== 0) {
     submitData = filteredSurvey[0].submitData;
   }
   const [target, setTarget] = useState(null);
-  const clickSurveyItem = Item => {
-    setTarget(Item);
+
+  const clickSurveyItem = item => {
+    setTarget(item);
     dispatch(openModal());
   };
+
   return (
     <Container>
       <Title>제출 목록</Title>

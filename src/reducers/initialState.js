@@ -30,7 +30,6 @@ export const initialState = {
       ],
       submitData: [
         {
-          id: 1,
           name: '홍길동',
           phone: '010-1234-4567',
           address: '서울시 강남구 xx동 302-55',
@@ -39,7 +38,6 @@ export const initialState = {
           agreement_0: true,
         },
         {
-          id: 2,
           name: '김코딩',
           phone: '010-2334-5555',
           address: '서울시 강서구 xx동 102-55',

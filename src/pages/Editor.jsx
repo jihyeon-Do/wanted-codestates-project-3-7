@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Fields from '../components/Editor/Fields';
 
 const basic = {
-  id: '',
+  id: 'name',
   type: 'text',
   required: false,
   label: '',
