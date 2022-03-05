@@ -27,13 +27,12 @@ export const deleteForm = formId => {
   };
 };
 
-export const submitForm = (formId, data, id) => {
+export const submitForm = (formId, data) => {
   return {
     type: SUBMIT_FORM,
     payload: {
       formId,
       data,
-      id,
     },
   };
 };

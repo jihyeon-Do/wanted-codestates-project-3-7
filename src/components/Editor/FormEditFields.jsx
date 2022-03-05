@@ -30,24 +30,51 @@ const FormEditFields = ({
       fields.map((field, i) => {
         if (index === i) {
           reset(field);
-          if (e.target.value === 'text' || e.target.value === 'phone') {
+          if (e.target.value === 'text') {
             return {
               ...field,
+              id: 'name',
               type: e.target.value,
               placeholder: '',
+              description: '',
+            };
+          } else if (e.target.value === 'phone') {
+            return {
+              ...field,
+              id: 'phone',
+              type: e.target.value,
+              placeholder: '',
+              description: '',
+            };
+          } else if (e.target.value === 'address') {
+            return {
+              ...field,
+              id: 'address',
+              type: e.target.value,
               description: '',
             };
           } else if (e.target.value === 'select') {
             return {
               ...field,
+              id: 'input_0',
               type: e.target.value,
               option: [],
               description: '',
             };
+          } else if (e.target.value === 'file') {
+            return {
+              ...field,
+              id: 'input_1',
+              type: e.target.value,
+              description: '',
+            };
           } else if (e.target.value === 'agreement') {
-            return { ...field, type: e.target.value, contents: '' };
-          } else {
-            return { ...field, type: e.target.value, description: '' };
+            return {
+              ...field,
+              id: 'agreement_0',
+              type: e.target.value,
+              contents: '',
+            };
           }
         }
         return field;

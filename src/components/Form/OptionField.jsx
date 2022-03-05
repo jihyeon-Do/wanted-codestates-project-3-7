@@ -6,9 +6,10 @@ import { BiChevronDown } from 'react-icons/bi';
 
 export const OptionField = ({
   label,
-  required,
   option,
   selected,
+  required,
+  description,
   isOptionCanView,
   isOptionHasList,
   selectClickItemHandler,
@@ -16,10 +17,10 @@ export const OptionField = ({
   return (
     <Wrapper>
       <h2>{label}</h2>
-      <br />
+      {description && <p>{description}</p>}
       <OptionWrapper>
         <div>{selected}</div>
-        <BiChevronDown onClick={() => isOptionCanView()} />
+        <BiChevronDown size="20" onClick={() => isOptionCanView()} />
       </OptionWrapper>
       {isOptionHasList === true ? (
         <ul>
@@ -54,8 +55,8 @@ const OptionWrapper = styled.div`
 
 const OptionData = styled.li`
   width: 100%;
-  padding: 5px 0px 5px 5px;
-  margin-bottom: 5px;
+  padding: 5px 0px 5px 10px;
+  margin: 0 0 5px 10px;
   border-bottom: 1px solid #efefef;
   list-style: none;
   &:hover {
@@ -66,13 +67,11 @@ const OptionData = styled.li`
 `;
 
 OptionField.propTypes = {
-  id: PropTypes.string,
   label: PropTypes.string,
-  placeholder: PropTypes.string,
-  required: PropTypes.bool,
-  description: PropTypes.string,
   option: PropTypes.array,
   selected: PropTypes.string,
+  required: PropTypes.bool,
+  description: PropTypes.string,
   isOptionCanView: PropTypes.func,
   isOptionHasList: PropTypes.bool,
   selectClickItemHandler: PropTypes.func,

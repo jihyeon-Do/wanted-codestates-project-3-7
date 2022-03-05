@@ -7,15 +7,9 @@ import { useSelector } from 'react-redux';
 
 const Main = () => {
   const navigate = useNavigate();
-
   const { forms } = useSelector(state => ({
     forms: state.form.forms,
   }));
-  // localStorage.setItem('reduxStore', JSON.stringify(forms));
-  // const getforms = JSON.parse((localStorage.getItem('reduxStore'))
-  // console.log(getforms);
-  // console.log(forms);
-
   return (
     <Container>
       <Title>최근 설문지</Title>
@@ -27,7 +21,6 @@ const Main = () => {
         <HiPlus size="30" color="#fff"></HiPlus>
       </PlusBtn>
 
-      {/* map으로 list 가져오기 */}
       {forms.map((obj, index) => {
         return <FormListItem obj={obj} key={index}></FormListItem>;
       })}
@@ -39,7 +32,6 @@ export const Container = styled.div`
   margin: 0 auto;
   width: 428px;
   padding: 20px;
-  /* background-color: #f7f7f7; */
   position: relative;
 `;
 
