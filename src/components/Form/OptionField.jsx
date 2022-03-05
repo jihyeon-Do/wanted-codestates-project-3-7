@@ -17,7 +17,7 @@ export const OptionField = ({
   return (
     <Wrapper>
       <h2>{label}</h2>
-      <p>{description}</p>
+      {description && <p>{description}</p>}
       <OptionWrapper>
         <div>{selected}</div>
         <BiChevronDown size="20" onClick={() => isOptionCanView()} />

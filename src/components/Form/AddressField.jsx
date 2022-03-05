@@ -14,7 +14,7 @@ export const AddressField = ({ fullAddress, description, label }) => {
   return (
     <Wrapper>
       <h2>{label}</h2>
-      <p>{description}</p>
+      {description && <p>{description}</p>}
       <InputField
         onClick={() => onClickOpenModal()}
         value={fullAddress}
