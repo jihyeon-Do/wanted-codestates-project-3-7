@@ -4,13 +4,13 @@ import { BiCheck } from 'react-icons/bi';
 import { Wrapper } from './Shared';
 import PropTypes from 'prop-types';
 
-export const CheckField = ({ agreement, isUserAgreement }) => {
+export const CheckField = ({ required, agreement, isUserAgreement }) => {
   return (
     <Wrapper>
       <Label>
         <LabelContentsWrapper>
           <CheckBoxWrapper>
-            <Checkbox type="checkbox" onClick={() => isUserAgreement()} />
+            <Checkbox type="checkbox" onClick={() => isUserAgreement(required)} />
             {agreement === false ? (
               <Unchecked />
             ) : (
@@ -80,6 +80,7 @@ const CheckedIconWrapper = styled.div`
 `;
 
 CheckField.propTypes = {
+  required: PropTypes.bool,
   agreement: PropTypes.bool,
   isUserAgreement: PropTypes.func,
 };

@@ -5,15 +5,17 @@ import PropTypes from 'prop-types';
 import { BiChevronDown } from 'react-icons/bi';
 
 export const OptionField = ({
+  label,
+  required,
+  option,
   selected,
   isOptionCanView,
   isOptionHasList,
-  input1,
   selectClickItemHandler,
 }) => {
   return (
     <Wrapper>
-      <h2>옵션1</h2>
+      <h2>{label}</h2>
       <br />
       <OptionWrapper>
         <div>{selected}</div>
@@ -21,12 +23,12 @@ export const OptionField = ({
       </OptionWrapper>
       {isOptionHasList === true ? (
         <ul>
-          {input1?.map((item, index) => {
+          {option?.map((item, index) => {
             return (
               <OptionData
                 item={item}
                 key={index}
-                onClick={() => selectClickItemHandler(input1[index], index)}
+                onClick={() => selectClickItemHandler(option[index], required)}
               >
                 {item}
               </OptionData>
@@ -64,9 +66,14 @@ const OptionData = styled.li`
 `;
 
 OptionField.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  description: PropTypes.string,
+  option: PropTypes.array,
   selected: PropTypes.string,
   isOptionCanView: PropTypes.func,
   isOptionHasList: PropTypes.bool,
-  input1: PropTypes.array,
   selectClickItemHandler: PropTypes.func,
 };
