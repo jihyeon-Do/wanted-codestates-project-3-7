@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../components/modal/Modal';
 import DaumPost from '../components/DaumPost';
 import { closeModal, submitForm } from '../actions';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { NameField } from '../components/Form/NameField';
 import { PhoneNumberField } from '../components/Form/PhoneNumberField';
 import { AddressField } from '../components/Form/AddressField';
@@ -18,56 +17,33 @@ const Form = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split('/');
-  const formIdx = path[path.length - 1];
-
+  const formId = path[path.length - 1];
   const { isModalShown, forms } = useSelector(state => ({
     isModalShown: state.modal.isModalShown,
     forms: state.form.forms,
   }));
-
-  const [field, setField] = useState([]);
-
-  const getFiledThroughForms = forms => {
-    forms.forEach(item => {
-      if (item.formId === formIdx) {
-        setField(item.fields);
-      }
-    });
-  };
-
-  useEffect(() => {
-    getFiledThroughForms(forms);
-  }, []);
+  const { title, fields } = forms.find(item => item.formId === formId);
 
   const [inputValues, setInputValues] = useState({
     name: '',
-    phoneNumber: '',
-    fullAddress: '',
-    input1: '',
-    agreement: false,
+    phone: '',
+    address: '',
+    input_0: '',
+    input_1: '',
+    agreement_0: false,
   });
   const [nameMessage, setNameMessage] = useState('');
   const [phoneMessage, setPhoneMessage] = useState('');
   const [selected, setSelected] = useState('');
-  const [isAllItemFilled, setIsAllItemFilled] = useState(false);
   const [isOptionHasList, setIsOptionHasList] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAllItemFilled, setIsAllItemFilled] = useState(false);
 
-  const { name, phoneNumber, fullAddress, input1, agreement } = inputValues;
-  const userId = useRef(0);
-  const getTitle = forms => {
-    let title;
-    const formLen = forms.length;
-    if (forms.length > 1) {
-      title = forms[formLen - 1].title;
-    } else {
-      title = forms[0].title;
-    }
-    return title;
-  };
+  const { name, phone, address, agreement_0 } = inputValues;
 
   const onChangeInputValues = (e, required) => {
     const { value, name } = e.target;
+
     if (name === 'name') {
       if (value.length < 2 || value.length > 5) {
         setNameMessage('2글자 이상 5글자 미만으로 입력해주세요');
@@ -79,15 +55,15 @@ const Form = () => {
       }
       setInputValues({
         ...inputValues,
-        [name]: value,
+        name: value,
       });
     }
-    if (name === 'phoneNumber') {
+    if (name === 'phone') {
       const regex = /^[0-9\b -]{0,13}$/;
-      if (regex.test(e.target.value)) {
+      if (regex.test(value)) {
         setInputValues({
           ...inputValues,
-          [name]: value,
+          phone: value,
         });
         setIsSubmitting(true);
         setPhoneMessage('올바른 형식입니다.');
@@ -101,7 +77,7 @@ const Form = () => {
   const setAddressKakakoApi = data => {
     setInputValues({
       ...inputValues,
-      fullAddress: data,
+      address: data,
     });
     setIsSubmitting(true);
     dispatch(closeModal());
@@ -110,7 +86,7 @@ const Form = () => {
   const isUserAgreement = required => {
     setInputValues({
       ...inputValues,
-      agreement: !agreement,
+      agreement_0: !agreement_0,
     });
     if (required) {
       setIsSubmitting(required);
@@ -127,7 +103,7 @@ const Form = () => {
     setSelected(item);
     setInputValues({
       ...inputValues,
-      input1: item,
+      input_1: item,
     });
     if (required) {
       setIsSubmitting(required);
@@ -136,110 +112,115 @@ const Form = () => {
   };
 
   useEffect(() => {
-    if (phoneNumber.length === 10) {
+    if (phone.length === 10) {
       setInputValues({
         ...inputValues,
-        phoneNumber: phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'),
+        phone: phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'),
       });
     }
-    if (phoneNumber.length === 13) {
+    if (phone.length === 13) {
       setInputValues({
         ...inputValues,
-        phoneNumber: phoneNumber
+        phone: phone
           .replace(/-/g, '')
           .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
       });
     }
-  }, [phoneNumber]);
+  }, [phone]);
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    dispatch(submitForm(formIdx, inputValues, userId.current));
-    userId.current++;
+    dispatch(submitForm(formId, inputValues));
     navigate('/');
   };
 
-  console.log(isSubmitting);
+  const attachHandler = url => {
+    setInputValues({
+      ...inputValues,
+      input_1: url,
+    });
+  };
 
   return (
     <Container>
-      <Title>{getTitle(forms)}</Title>
-      {field.map(item => {
-        const { description, id, label, placeholder, required, type, option } =
+      <Title>{title}</Title>
+      {fields.map((item, idx) => {
+        const { description, label, placeholder, required, type, option } =
           item;
-        if (type === 'phone') {
-          return (
-            <PhoneNumberField
-              key={id}
-              label={label}
-              placeholder={placeholder}
-              required={required}
-              description={description}
-              phoneNumber={phoneNumber}
-              onChangeInputValues={onChangeInputValues}
-              isSubmitting={isSubmitting}
-              phoneMessage={phoneMessage}
-            />
-          );
-        }
         if (type === 'text') {
           return (
             <NameField
-              key={id}
-              label={label}
-              placeholder={placeholder}
-              required={required}
-              description={description}
+              key={idx + 1}
               name={name}
-              onChangeInputValues={onChangeInputValues}
-              isSubmitting={isSubmitting}
-              nameMessage={nameMessage}
-            />
-          );
-        }
-        if (type === 'select') {
-          return (
-            <OptionField
-              key={id}
               label={label}
-              placeholder={placeholder}
               required={required}
+              placeholder={placeholder}
               description={description}
-              option={option}
-              selected={selected}
-              isOptionCanView={isOptionCanView}
-              isOptionHasList={isOptionHasList}
-              input1={input1}
-              selectClickItemHandler={selectClickItemHandler}
+              nameMessage={nameMessage}
+              isSubmitting={isSubmitting}
+              onChangeInputValues={onChangeInputValues}
             />
           );
         }
-        if (type === 'agreement') {
+        if (type === 'phone') {
           return (
-            <CheckField
-              key={id}
+            <PhoneNumberField
+              key={idx + 1}
+              label={label}
+              phoneNumber={phone}
               required={required}
-              agreement={agreement}
-              isUserAgreement={isUserAgreement}
+              placeholder={placeholder}
+              description={description}
+              phoneMessage={phoneMessage}
+              isSubmitting={isSubmitting}
+              onChangeInputValues={onChangeInputValues}
             />
           );
         }
         if (type === 'address') {
           return (
             <AddressField
-              key={id}
+              key={idx + 1}
+              label={label}
               required={required}
-              fullAddress={fullAddress}
+              fullAddress={address}
               description={description}
+            />
+          );
+        }
+        if (type === 'select') {
+          return (
+            <OptionField
+              key={idx + 1}
+              label={label}
+              option={option}
+              selected={selected}
+              required={required}
+              description={description}
+              isOptionCanView={isOptionCanView}
+              isOptionHasList={isOptionHasList}
+              selectClickItemHandler={selectClickItemHandler}
             />
           );
         }
         if (type === 'file') {
           return (
             <AttachedField
-              key={id}
-              setIsSubmitting={setIsSubmitting}
+              key={idx + 1}
+              label={label}
               description={description}
+              attachHandler={attachHandler}
+              setIsSubmitting={setIsSubmitting}
+            />
+          );
+        }
+        if (type === 'agreement') {
+          return (
+            <CheckField
+              key={idx + 1}
+              required={required}
+              agreement={agreement_0}
+              isUserAgreement={isUserAgreement}
             />
           );
         }
@@ -265,7 +246,7 @@ const Form = () => {
 };
 
 const Title = styled.h1`
-  display: felx;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 428px;
@@ -277,7 +258,6 @@ const Container = styled.div`
   margin: 0 auto;
   width: 428px;
   padding: 20px;
-  /* background-color: #f7f7f7; */
   position: relative;
 `;
 
