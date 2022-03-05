@@ -3,6 +3,10 @@ import { Wrapper, InputField, InputSummitingLabel } from './Shared';
 import PropTypes from 'prop-types';
 
 export const NameField = ({
+  label,
+  placeholder,
+  required,
+  description,
   name,
   onChangeInputValues,
   isSubmitting,
@@ -10,18 +14,18 @@ export const NameField = ({
 }) => {
   return (
     <Wrapper>
-      <h2>이름</h2>
+      <h2>{label}</h2>
       <br />
       <InputField
         type="text"
         name="name"
-        placeholder="주민등록상이름"
+        placeholder={placeholder}
         value={name}
-        onChange={onChangeInputValues}
+        onChange={(e) => onChangeInputValues(e, required)}
       />
       {name.length > 0 && (
         <InputSummitingLabel isSubmitting={isSubmitting}>
-          {nameMessage}
+          {description.replace("\"", "")}
         </InputSummitingLabel>
       )}
     </Wrapper>
@@ -29,6 +33,11 @@ export const NameField = ({
 };
 
 NameField.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  placeholder:PropTypes.string,
+  required:PropTypes.bool,
+  description:PropTypes.string,
   name: PropTypes.string,
   onChangeInputValues: PropTypes.func,
   isSubmitting: PropTypes.bool,

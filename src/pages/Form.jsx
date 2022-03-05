@@ -25,12 +25,25 @@ const Form = () => {
     forms: state.form.forms,
   }));
 
-  console.log(forms);
+  const [field, setField] = useState([]);
+
+  const getFiledThroughForms = forms => {
+    forms.forEach(item => {
+      if (item.formId === formIdx) {
+        setField(item.fields);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getFiledThroughForms(forms);
+  }, []);
+
   const [inputValues, setInputValues] = useState({
     name: '',
     phoneNumber: '',
     fullAddress: '',
-    input1: ['small', 'medium', 'large'],
+    input1: '',
     agreement: false,
   });
   const [nameMessage, setNameMessage] = useState('');
@@ -42,26 +55,27 @@ const Form = () => {
 
   const { name, phoneNumber, fullAddress, input1, agreement } = inputValues;
   const userId = useRef(0);
-  const getTitle = () => {
+  const getTitle = forms => {
     let title;
-    const idx = parseInt(formIdx.replace(/[^0-9]/g, ' '));
-    console.log(idx);
+    const formLen = forms.length;
     if (forms.length > 1) {
-      title = forms[idx - 1].title
+      title = forms[formLen - 1].title;
     } else {
-      title = forms[0].title
+      title = forms[0].title;
     }
     return title;
-  }
+  };
 
-  const onChangeInputValues = e => {
+  const onChangeInputValues = (e, required) => {
     const { value, name } = e.target;
     if (name === 'name') {
       if (value.length < 2 || value.length > 5) {
         setNameMessage('2글자 이상 5글자 미만으로 입력해주세요');
       } else {
         setNameMessage('올바른 형식입니다.');
-        setIsSubmitting(true);
+        if (required) {
+          setIsSubmitting(required);
+        }
       }
       setInputValues({
         ...inputValues,
@@ -93,13 +107,13 @@ const Form = () => {
     dispatch(closeModal());
   };
 
-  const isUserAgreement = () => {
+  const isUserAgreement = required => {
     setInputValues({
       ...inputValues,
       agreement: !agreement,
     });
-    if (isSubmitting === true) {
-      return;
+    if (required) {
+      setIsSubmitting(required);
     } else {
       setIsSubmitting(!isSubmitting);
     }
@@ -109,13 +123,15 @@ const Form = () => {
     setIsOptionHasList(!isOptionHasList);
   };
 
-  const selectClickItemHandler = (item) => {
-    setSelected(item)
+  const selectClickItemHandler = (item, required) => {
+    setSelected(item);
     setInputValues({
       ...inputValues,
-      ['selected'] : item,
+      input1: item,
     });
-    setIsSubmitting(true);
+    if (required) {
+      setIsSubmitting(required);
+    }
     setIsOptionHasList(!isOptionHasList);
   };
 
@@ -136,55 +152,104 @@ const Form = () => {
     }
   }, [phoneNumber]);
 
-  const IsAllItemSubmitted = () => {
-    if (name && phoneNumber && selected && fullAddress && agreement === true) {
-      setIsAllItemFilled(true);
-    }
-  };
-
-  useEffect(() => {
-    IsAllItemSubmitted();
-  }, [name, phoneNumber, selected, fullAddress, agreement]);
-
   const onSubmitHandler = e => {
     e.preventDefault();
     dispatch(submitForm(formIdx, inputValues, userId.current));
-    userId.current++
-    navigate('/')
+    userId.current++;
+    navigate('/');
   };
+
+  console.log(isSubmitting);
 
   return (
     <Container>
-      <Title>{getTitle()}</Title>
-      <NameField
-        name={name}
-        onChangeInputValues={onChangeInputValues}
-        isSubmitting={isSubmitting}
-        nameMessage={nameMessage}
-      />
-      <PhoneNumberField
-        phoneNumber={phoneNumber}
-        onChangeInputValues={onChangeInputValues}
-        isSubmitting={isSubmitting}
-        phoneMessage={phoneMessage}
-      />
-      <AddressField fullAddress={fullAddress} />
-      <OptionField
-        selected={selected}
-        isOptionCanView={isOptionCanView}
-        isOptionHasList={isOptionHasList}
-        input1={input1}
-        selectClickItemHandler={selectClickItemHandler}
-      />
-      <AttachedField setIsSubmitting={setIsSubmitting} />
-      <CheckField agreement={agreement} isUserAgreement={isUserAgreement} />
-      <br />
+      <Title>{getTitle(forms)}</Title>
+      {field.map(item => {
+        const { description, id, label, placeholder, required, type, option } =
+          item;
+        if (type === 'phone') {
+          return (
+            <PhoneNumberField
+              key={id}
+              label={label}
+              placeholder={placeholder}
+              required={required}
+              description={description}
+              phoneNumber={phoneNumber}
+              onChangeInputValues={onChangeInputValues}
+              isSubmitting={isSubmitting}
+              phoneMessage={phoneMessage}
+            />
+          );
+        }
+        if (type === 'text') {
+          return (
+            <NameField
+              key={id}
+              label={label}
+              placeholder={placeholder}
+              required={required}
+              description={description}
+              name={name}
+              onChangeInputValues={onChangeInputValues}
+              isSubmitting={isSubmitting}
+              nameMessage={nameMessage}
+            />
+          );
+        }
+        if (type === 'select') {
+          return (
+            <OptionField
+              key={id}
+              label={label}
+              placeholder={placeholder}
+              required={required}
+              description={description}
+              option={option}
+              selected={selected}
+              isOptionCanView={isOptionCanView}
+              isOptionHasList={isOptionHasList}
+              input1={input1}
+              selectClickItemHandler={selectClickItemHandler}
+            />
+          );
+        }
+        if (type === 'agreement') {
+          return (
+            <CheckField
+              key={id}
+              required={required}
+              agreement={agreement}
+              isUserAgreement={isUserAgreement}
+            />
+          );
+        }
+        if (type === 'address') {
+          return (
+            <AddressField
+              key={id}
+              required={required}
+              fullAddress={fullAddress}
+              description={description}
+            />
+          );
+        }
+        if (type === 'file') {
+          return (
+            <AttachedField
+              key={id}
+              setIsSubmitting={setIsSubmitting}
+              description={description}
+            />
+          );
+        }
+      })}
       <SubmitButtonContainer>
         <SubmitButtonWrapper>
           <SubmitButton
             onClick={e => onSubmitHandler(e)}
             type="submit"
-            disabled={!isAllItemFilled}
+            disabled={!isSubmitting}
           >
             제출하기
           </SubmitButton>

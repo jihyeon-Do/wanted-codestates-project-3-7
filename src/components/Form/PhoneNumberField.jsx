@@ -7,6 +7,10 @@ import {
 import PropTypes from 'prop-types';
 
 export const PhoneNumberField = ({
+  label,
+  placeholder,
+  required,
+  description,
   phoneNumber,
   onChangeInputValues,
   isSubmitting,
@@ -14,14 +18,16 @@ export const PhoneNumberField = ({
 }) => {
   return (
     <Wrapper>
-      <h2>휴대폰번호</h2>
+      <h2>{label}</h2>
       <br />
       <InputField
         type="text"
         name="phoneNumber"
         value={phoneNumber}
-        onChange={onChangeInputValues}
+        onChange={(e) => onChangeInputValues(e, required)}
+        placeholder={placeholder}
       />
+      {description}
       {phoneNumber.length > 0 && (
           <InputSummitingLabel isSubmitting={isSubmitting}>
             {phoneMessage}
@@ -32,6 +38,11 @@ export const PhoneNumberField = ({
 };
 
 PhoneNumberField.propTypes = {
+  id: PropTypes.string,
+  label: PropTypes.string,
+  placeholder:PropTypes.string,
+  required:PropTypes.bool,
+  description:PropTypes.string,
   phoneNumber: PropTypes.string,
   onChangeInputValues: PropTypes.func,
   isSubmitting: PropTypes.bool,
