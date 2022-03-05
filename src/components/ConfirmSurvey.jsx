@@ -6,12 +6,13 @@ const ConfirmSurvey = ({ filteredSurvey, target }) => {
   return (
     <ModalWrap>
       <ModalTitle>내용 확인</ModalTitle>
-
       {filteredSurvey[0].fields.map((obj, index) => {
         return (
           <ModalContent key={index}>
             <FieldTitle>{obj.label}</FieldTitle>
-            <FieldContent>{target[obj.id]}</FieldContent>
+            <FieldContent>
+              {target[obj.id] === true ? '약관 동의' : target[obj.id]}
+            </FieldContent>
             <Line></Line>
           </ModalContent>
         );
