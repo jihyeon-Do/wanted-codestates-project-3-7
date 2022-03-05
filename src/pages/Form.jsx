@@ -37,7 +37,6 @@ const Form = () => {
   const [selected, setSelected] = useState('');
   const [isOptionHasList, setIsOptionHasList] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAllItemFilled, setIsAllItemFilled] = useState(false);
 
   const { name, phone, address, agreement_0 } = inputValues;
 

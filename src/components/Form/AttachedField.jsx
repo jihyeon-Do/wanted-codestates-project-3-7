@@ -6,12 +6,7 @@ import PropTypes from 'prop-types';
 import { useInterval } from '../../utils/util';
 import { AiTwotoneCamera } from 'react-icons/ai';
 
-export const AttachedField = ({
-  label,
-  description,
-  attachHandler,
-  setIsSubmitting,
-}) => {
+export const AttachedField = ({ label, description, attachHandler }) => {
   const hiddenFileInput = useRef(null);
 
   const handleClick = () => {
@@ -188,5 +183,4 @@ AttachedField.propTypes = {
   label: PropTypes.string,
   description: PropTypes.string,
   attachHandler: PropTypes.func,
-  setIsSubmitting: PropTypes.func,
 };
