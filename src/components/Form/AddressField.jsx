@@ -4,7 +4,7 @@ import { Wrapper, InputField } from './Shared';
 import { openModal } from '../../actions';
 import PropTypes from 'prop-types';
 
-export const AddressField = ({fullAddress}) => {
+export const AddressField = ({ fullAddress, description, label }) => {
   const dispatch = useDispatch();
 
   const onClickOpenModal = () => {
@@ -13,13 +13,19 @@ export const AddressField = ({fullAddress}) => {
 
   return (
     <Wrapper>
-      <h2>배송지</h2>
-      <br />
-      <InputField onClick={() => onClickOpenModal()} value={fullAddress} readOnly/>
+      <h2>{label}</h2>
+      <p>{description}</p>
+      <InputField
+        onClick={() => onClickOpenModal()}
+        value={fullAddress}
+        readOnly
+      />
     </Wrapper>
   );
 };
 
 AddressField.propTypes = {
+  label: PropTypes.string,
   fullAddress: PropTypes.string,
+  description: PropTypes.string,
 };
